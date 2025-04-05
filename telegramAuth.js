@@ -1,5 +1,5 @@
 
-var deployUrl = 'https://script.google.com/macros/s/AKfycbxhkiChVfuaBiL4A2hcb-4787C9k3YnFj5W99998lMfhQiNEJtMefjtUb5ftHopU6EL/exec';
+var deployUrl = 'https://script.google.com/macros/s/AKfycbw5OrUkkGR0c9OfJpQVY_kR58ej3_9cMbLNPnWdwzRsqhebvlu29Ff-Omvf-C1DwI3U/exec';
 
 
 
@@ -29,12 +29,27 @@ document.addEventListener('DOMContentLoaded', function() {
     sendDataToServer(userData);
   });
 
-  function sendDataToServer(data) {
+  async function sendDataToServer(data) {
 
     // достаем данные с файла confgi.js 
     const url = deployUrl ; // Замените на ваш URL скрипта
     // гет запрос
     const params = new URLSearchParams(data);
     const requestUrl = `${url}?${params.toString()}`;
-    console.log('Отправка данных на сервер:', requestUrl);
+    console.log('Отправка данных на сервер:', requestUrl);  
+    // Отправляем данные на сервер  no cors 
+    var resp = await fetch(requestUrl, {
+      method: 'GET',
+      mode: 'no-cors',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }) 
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error('Network response was not ok');
+      }
+    })
   }
