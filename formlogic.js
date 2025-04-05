@@ -1,6 +1,6 @@
  
     // URL вашего веб-приложения Google Apps Scriptconst 
-    SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbywYGlqrw0Q32aVBV78rAVyeBApfjxjqV3IhGkHYWptC6msOHwWgH_kR1NLKEpRLFVT/exec'
+    SCRIPT_URL = PROD_SCRIPT_URL;
     const form = document.getElementById('articleForm');
     const messageEl = document.getElementById('message');
     const loadingEl = document.querySelector('.loading');
