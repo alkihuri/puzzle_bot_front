@@ -1,6 +1,6 @@
  
     // URL вашего веб-приложения Google Apps Scriptconst 
-    SCRIPT_URL = PROD_SCRIPT_URL;
+    const SCRIPT_URL =  window.PROD_SCRIPT_URL; // Замените на ваш URL скрипта
     const form = document.getElementById('articleForm');
     const messageEl = document.getElementById('message');
     const loadingEl = document.querySelector('.loading');

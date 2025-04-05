@@ -1,3 +1,8 @@
+
+var deployUrl = window.PROD_SCRIPT_URL;
+
+
+
 document.addEventListener('DOMContentLoaded', function() {
     // Данные по умолчанию (для теста вне Telegram)
     let userData = {
@@ -27,20 +32,9 @@ document.addEventListener('DOMContentLoaded', function() {
   function sendDataToServer(data) {
 
     // достаем данные с файла confgi.js 
-    const url =  PROD_SCRIPT_URL ; // Замените на ваш URL
-    const params = {
-      method: 'GET',
-      contentType: 'application/json',
-      payload: JSON.stringify(data)
-    };
-
-    fetch(url, params)
-      .then(response => response.json())
-      .then(result => {
-        console.log('Данные успешно отправлены:', result);
-      })
-      .catch(error => {
-        console.error('Ошибка при отправке данных:', error);
-      });
-
+    const url = deployUrl ; // Замените на ваш URL скрипта
+    // гет запрос
+    const params = new URLSearchParams(data);
+    const requestUrl = `${url}?${params.toString()}`;
+    console.log('Отправка данных на сервер:', requestUrl);
   }
