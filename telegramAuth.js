@@ -1,5 +1,5 @@
 
-var deployUrl = window.PROD_SCRIPT_URL;
+var deployUrl = 'https://script.google.com/macros/s/AKfycbxhkiChVfuaBiL4A2hcb-4787C9k3YnFj5W99998lMfhQiNEJtMefjtUb5ftHopU6EL/exec';
 
 
 
