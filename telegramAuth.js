@@ -45,11 +45,17 @@ document.addEventListener('DOMContentLoaded', function() {
         'Content-Type': 'application/json'
       }
     }) 
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw new Error('Network response was not ok');
+    .then(async response => { 
+      console.log('Ответ сервера:', response);  
+      // close if telegram
+      if (window.Telegram && Telegram.WebApp) {
+        Telegram.WebApp.close();
+      }
+      else 
+      {
+        // написать на экране вы успешно отправили данные
+        alert('Вы успешно отправили данные');
+        await new Promise(resolve => setTimeout(resolve, 2000)).then(() => {window.close();});  
       }
     })
   }
