@@ -30,11 +30,21 @@
         <img id="imagePreview" class="image-preview" alt="Предпросмотр">
       </div>
       
-      <div class="form-row">
-        <div class="form-group">
-          <label for="study">Учебное заведение</label>
-          <input type="text" id="study">
+      <div class="form-group">
+        <label for="study" class="required-field">Направление</label>
+        <div>
+          <input type="checkbox" id="frontendbox" name="study" value="Frontend">
+          <label for="frontend">Frontend</label>
         </div>
+        <div>
+          <input type="checkbox" id="backendbox" name="study" value="Backend">
+          <label for="backend">Backend</label>
+        </div>
+        <div>
+          <input type="checkbox" id="uiuxbox" name="study" value="UI/UX">
+          <label for="uiux">UI/UX</label>
+        </div>
+      </div>
         
         <div class="form-group">
           <label for="type" class="required-field">Тип статьи</label>
