@@ -111,7 +111,20 @@ select {
   flex: 1;
   margin-bottom: 0;
 }
+.direction-btn {
+  /* базовые стили кнопки */
+  background-color: #f0f0f0;
+  color: #333;
+  border: 2px solid #ddd;
+  /* ... другие стили ... */
+}
 
+.direction-btn.selected {
+  background-color: #4CAF50; /* зеленый цвет */
+  color: white;
+  border-color: #4CAF50;
+  /* можно добавить другие стили для выделения */
+}
 button {
   background: linear-gradient(135deg, #3498db, #2ecc71);
   color: white;
@@ -128,6 +141,8 @@ button {
   letter-spacing: 0.5px;
   box-shadow: 0 4px 12px rgba(52, 152, 219, 0.2);
 }
+
+
 
 button:hover {
   transform: translateY(-2px);

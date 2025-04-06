@@ -1,26 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-  
-  <link rel="stylesheet" href="styles.css">
   <meta charset="UTF-8">
-  <base target="_top">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Выбор направления</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <style>
-    body { font-family: Arial, sans-serif; padding: 20px; text-align: center; }
-    .loader { margin: 20px; }
-  </style>
+  <link rel="stylesheet" href="styles.css">
+  <style> </style>
 </head>
 <body>
   <div id="content">
-    <h2>Идет авторизация...</h2>
-    <div class="loader">⏳</div>
-  </div> 
-  <script>
-    // Глобальные переменные
-    var myVariable = "Hello, world!";
-  </script>
-  <script  srs="gasconfigs.js"></script>
-  <script  src="telegramAuth.js"  defer></script>     
+    <h2>Форма регистрации:</h2>
+    <button id="backendButton" class="direction-btn">Backend</button>
+    <button id="frontendButton" class="direction-btn">Frontend</button>
+    <button id="uiuxButton" class="direction-btn">UI/UX</button>
+    <div>
+      <button id="submitBtn" disabled>Зарегистрироваться</button>
+    </div>
+  </div>
+
+  <script src="telegramAuth.js"></script>
 </body>
 </html>
