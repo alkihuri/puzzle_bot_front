@@ -47,13 +47,34 @@ form.addEventListener('submit', async function (e) {
   console.log('Выбранные направления:', directions.join(', '));  
 
 
+    // Данные по умолчанию (для теста вне Telegram)
+    let userData = {
+      telegram_id: 123,
+      name: 'No user',
+      study: directions.join(', '),
+    };
+
+    // Если запущено в Telegram - берем реальные данные
+    if (window.Telegram?.WebApp?.initDataUnsafe?.user) {
+      const tgUser = Telegram.WebApp.initDataUnsafe.user;
+      userData = {
+        telegram_id: tgUser.id,
+        name: [tgUser.first_name, tgUser.last_name].filter(Boolean).join(' '),
+        study: JSON.stringify(directions)
+      };
+    }
+
   const formData = {
     title: document.getElementById('title').value.trim(),
     text: document.getElementById('text').value.trim(),
     study:  directions.join(', '),
-    type: document.getElementById('type').value
+    type: document.getElementById('type').value 
   };
-  console.log('Отправка данных 123 :', formData);
+
+   
+
+
+  console.log('Отправка данных  :', formData);
   // Валидация
   if (!formData.title || !formData.text || !formData.type) {
     showMessage('Пожалуйста, заполните все обязательные поля', 'error');

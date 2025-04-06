@@ -80,8 +80,8 @@ document.addEventListener('DOMContentLoaded', function() {
   async function submitRegistration(directions) {
     // Данные по умолчанию (для теста вне Telegram)
     let userData = {
-      telegram_id: 12345678,
-      name: 'Test User',
+      telegram_id: 0,
+      name: 'No user',
       study: directions.join(', '),
     };
 
