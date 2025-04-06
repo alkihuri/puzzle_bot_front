@@ -24,40 +24,7 @@ imageInput.addEventListener('change', function () {
 form.addEventListener('submit', async function (e) {
   e.preventDefault();
 
-  var userData = {};  
-  // Если запущено в Telegram - берем реальные данные
-  if (window.Telegram && Telegram.WebApp) {
-    const tg = Telegram.WebApp;
-    const tgUser = tg.initDataUnsafe.user;
-
-    if (tgUser) {
-      userData = {
-        telegram_id: tgUser.id,
-        name: [tgUser.first_name, tgUser.last_name].filter(Boolean).join(' '),
-        study: 'Telegram User'
-      };
-    }
-  }
-  else {
-    // Данные по умолчанию (для теста вне Telegram)
-    userData = {
-      telegram_id: 'Нет данных об пользователе',
-      name: 'No user',
-      study: 'No data'
-    };
-  }
-
-  var telegram_user;
-
-  try {
-    if (window.Telegram && Telegram.WebApp) {
-      telegram_user = userData.telegram_id + ' ' + userData.name;
-    }
-  }
-  catch (error) {
-    console.error('Ошибка:', error);
-    telegram_user = 'Нет данных об пользователе';
-  }
+   
 
 
   var directions = [];
@@ -84,8 +51,7 @@ form.addEventListener('submit', async function (e) {
     title: document.getElementById('title').value.trim(),
     text: document.getElementById('text').value.trim(),
     study:  directions.join(', '),
-    type: document.getElementById('type').value,
-    telegram_user: telegram_user
+    type: document.getElementById('type').value
   };
   console.log('Отправка данных 123 :', formData);
   // Валидация
