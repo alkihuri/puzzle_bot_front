@@ -1,6 +1,6 @@
 
 // URL вашего веб-приложения Google Apps Scriptconst 
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz6A5P3mWRDj0QN5TlOWEoONL_COMM8iYmzbUFvl-IQ_McRERR300RbZvZuf9FoPSUu/exec'; // Замените на ваш URL скрипта
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxkLacFz0Bku19jSnlInxBCXGmth1d5EpjhtzKH24qiOsujcy2rVYp-eAyWBWiWfHn8/exec'; // Замените на ваш URL скрипта
 const form = document.getElementById('articleForm');
 const messageEl = document.getElementById('message');
 const loadingEl = document.querySelector('.loading');
@@ -131,6 +131,17 @@ async function submitRegularForm(formData) {
       },
       body: JSON.stringify(formData),
       mode: 'no-cors'
+    }).then(async response => {
+
+      // если телеграмм то закрываем 
+      if (window.Telegram && Telegram.WebApp) {
+        const tg = Telegram.WebApp;
+        tg.close();
+      } else {
+        // Если не в Telegram, просто показываем сообщение
+        showMessage('Данные успешно отправлены!', 'success');
+      }
+
     });
 
 
