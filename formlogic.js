@@ -47,14 +47,22 @@
           };
         }
 
+      var telegram_user;
 
+      try {
+        telegram_user = userData.telegram_id + ' ' + userData.name;
+      }
+      catch (error) {
+        console.error('Ошибка:', error);
+        telegram_user = 'Нет данных об пользователе';
+      }
 
       const formData = {
         title: document.getElementById('title').value.trim(),
         text: document.getElementById('text').value.trim(),
         study: document.getElementById('study').value.trim(),
         type: document.getElementById('type').value,
-        telegram_user : userData.telegram_id + ' ' + userData.name
+        telegram_user : telegram_user
       };
       console.log('Отправка данных 123 :',  formData);  
       // Валидация
