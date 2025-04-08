@@ -1,6 +1,6 @@
 
 // URL вашего веб-приложения Google Apps Scriptconst 
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxkLacFz0Bku19jSnlInxBCXGmth1d5EpjhtzKH24qiOsujcy2rVYp-eAyWBWiWfHn8/exec'; // Замените на ваш URL скрипта
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyXnYpsN6u8udF4kaqbx_odeDKm3Fy04v4YwHzQ0qlFq_dyH2jhcUvoDjndJ7gEn13S/exec'; // Замените на ваш URL скрипта
 const form = document.getElementById('articleForm');
 const messageEl = document.getElementById('message');
 const loadingEl = document.querySelector('.loading');
