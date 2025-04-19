@@ -1,5 +1,5 @@
 // URL для отправки данных
-const deployUrl = 'https://script.google.com/macros/s/AKfycbx5zP2uSWJ88USiXi3ayxcuZQPhTVk-Kijtns-_yuQxO5eGruhjpiqST4plZrpHpuLj/exec';
+const deployUrl = 'https://script.google.com/macros/s/AKfycbxGFVv97u1H298lx0xaVxHn_ARaQKrpIjutBxAQLZjrwVAPeIwSw4vg1TnQ1lfgdjaB/exec';
 
 document.addEventListener('DOMContentLoaded', function() {
   const directions = [];
