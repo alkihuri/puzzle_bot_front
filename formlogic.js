@@ -1,14 +1,10 @@
-
-// URL вашего веб-приложения Google Apps Scriptconst
-const SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbxGFVv97u1H298lx0xaVxHn_ARaQKrpIjutBxAQLZjrwVAPeIwSw4vg1TnQ1lfgdjaB/exec"; // Замените на ваш URL скрипта
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxOtx7QZmyLP-bMOVteTtEloDYOaEc9cPl6SHoZfTSlPIZVcLcnp0U3ouoDJShUNml_/exec"; // замените на ваш URL
 const form = document.getElementById("articleForm");
 const messageEl = document.getElementById("message");
 const loadingEl = document.querySelector(".loading");
 const imageInput = document.getElementById("image");
 const imagePreview = document.getElementById("imagePreview");
 
-// Предпросмотр изображения
 imageInput.addEventListener("change", function () {
   const file = this.files[0];
   if (file) {
@@ -21,115 +17,76 @@ imageInput.addEventListener("change", function () {
   }
 });
 
-// Отправка формы
-form.addEventListener("submit", async function (e) {
+form.addEventListener("submit", function (e) {
   e.preventDefault();
-  var directions = [];
+  const file = document.getElementById("image").files[0];
 
-  // Получаем выбранные направления
-
-  if (document.getElementById("uiuxbox").checked) {
-    directions.push("UI/UX");
-  }
-  if (document.getElementById("backendbox").checked) {
-    directions.push("backend");
-  }
-  if (document.getElementById("frontendbox").checked) {
-    directions.push("frontend");
-  }
-
-  console.log("Выбранные направления:", directions.join(", "));
-
-  // Данные по умолчанию (для теста вне Telegram)
-  let userData = {
-    telegram_id: 123,
-    name: "No user",
-    study: directions.join(", "),
-  };
-
-  // Если запущено в Telegram - берем реальные данные
-  if (window.Telegram?.WebApp?.initDataUnsafe?.user) {
-    const tgUser = Telegram.WebApp.initDataUnsafe.user;
-    userData = {
-      telegram_id: tgUser.id,
-      name: [tgUser.first_name, tgUser.last_name].filter(Boolean).join(" "),
-      study: JSON.stringify(directions),
-    };
-  }
-
-  const formValues = {
-    title: document.getElementById("title").value.trim(),
-    text: document.getElementById("text").value.trim(),
-    study: directions.join(", "),
-    type: document.getElementById("type").value,
-    image: document.getElementById("image").files[0],
-  };
-
-  const formData = new FormData();
-  Object.entries(formValues).forEach(([key, value]) => {
-    console.log(key,value)
-    formData.append(key, value);
-  });
-
-  console.log("Отправка данных  :", formData);
-  // Валидация
-  if (!formValues.title || !formValues.text || !formValues.type) {
-    showMessage("Пожалуйста, заполните все обязательные поля", "error");
+  if (!file) {
+    showMessage("Пожалуйста, выберите изображение", "error");
     return;
   }
 
-  toggleLoading(true);
+  const reader = new FileReader();
+  reader.onload = async function () {
+    const base64Data = reader.result.split(",")[1]; 
 
-  try {
-    await submitRegularForm(formData);
-  } catch (error) {
-    console.error("Error:", error);
-    showMessage(`Ошибка: ${error.message}`, "error");
-  } finally {
-    toggleLoading(false);
-  }
-});
+    const payload = {
+      title: document.getElementById("title").value.trim(),
+      text: document.getElementById("text").value.trim(),
+      type: document.getElementById("type").value,
+      study: getStudyDirections(),
+      image: {
+        name: file.name,
+        type: file.type,
+        data: base64Data
+      }
+    };
 
-// Стандартная отправка формы
-async function submitRegularForm(formData) {
-  // console.log("Отправка данных:", JSON.stringify(formData));
+    if (!payload.title || !payload.text || !payload.type) {
+      showMessage("Пожалуйста, заполните все обязательные поля", "error");
+      return;
+    }
 
-  try {
-    // Отправка данных на сервер
-    const response = await fetch(SCRIPT_URL, {
-      method: "POST",
-      headers: {
-        'Allow': '*',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-      },
-      body: formData,
-      mode: "no-cors",
-    }).then(async (response) => {
-      // если телеграмм то закрываем
-      if (window.Telegram && Telegram.WebApp) {
-        const tg = Telegram.WebApp;
-        tg.close();
+    toggleLoading(true);
+    try {
+      const response = await fetch(SCRIPT_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        mode:"no-cors",
+        body: JSON.stringify(payload)
+      });
+
+      if (window.Telegram?.WebApp) {
+        Telegram.WebApp.close();
       } else {
-        // Если не в Telegram, просто показываем сообщение
         showMessage("Данные успешно отправлены!", "success");
       }
-    });
-  } catch (error) {
-    console.error("Ошибка отправки:", error);
-    showMessage(`Ошибка отправки: ${error.message}`, "error");
-  }
+    } catch (error) {
+      console.error("Ошибка:", error);
+      showMessage("Ошибка отправки данных", "error");
+    } finally {
+      toggleLoading(false);
+    }
+  };
+
+  reader.readAsDataURL(file);
+});
+
+function getStudyDirections() {
+  const directions = [];
+  if (document.getElementById("uiuxbox").checked) directions.push("UI/UX");
+  if (document.getElementById("backendbox").checked) directions.push("Backend");
+  if (document.getElementById("frontendbox").checked) directions.push("Frontend");
+  return directions.join(", ");
 }
 
 function showMessage(text, type = "success") {
   messageEl.className = `alert alert-${type}`;
   messageEl.textContent = text;
   messageEl.style.display = "block";
-
-  setTimeout(() => {
-    messageEl.style.display = "none";
-  }, 5000);
+  setTimeout(() => { messageEl.style.display = "none"; }, 5000);
 }
 
 function toggleLoading(show) {
