@@ -1,4 +1,4 @@
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxOtx7QZmyLP-bMOVteTtEloDYOaEc9cPl6SHoZfTSlPIZVcLcnp0U3ouoDJShUNml_/exec"; // замените на ваш URL
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzg4tCS79XocvKulFgEhq0kjgnKec3Ho7pxe1Swm6kHNjnk5WKxcOXvCxzTfNuHKXi0/exec"; // замените на ваш URL
 const form = document.getElementById("articleForm");
 const messageEl = document.getElementById("message");
 const loadingEl = document.querySelector(".loading");
